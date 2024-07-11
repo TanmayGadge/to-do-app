@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import Item from "./components/item";
 
 function App() {
   const [inputItem, setInputItem] = useState("");
@@ -17,6 +18,14 @@ function App() {
     setInputItem("");
   }
 
+  function deleteItem(id) {
+    setItems((prevValue) => {
+      return prevValue.filter((item, index) => {
+        return index !== id;  
+      });
+    });
+  }
+
   return (
     <div className="container">
       <div className="heading">
@@ -30,8 +39,15 @@ function App() {
       </div>
       <div className="list-container">
         <ul className="items">
-          {items.map((todoItem) => {
-            return <li>{todoItem}</li>;
+          {items.map((todoItem, index) => {
+            return (
+              <Item
+                key={index}
+                id={index}
+                item={todoItem}
+                onChecked={deleteItem}
+              />
+            );
           })}
         </ul>
       </div>
